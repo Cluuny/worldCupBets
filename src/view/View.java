@@ -17,4 +17,13 @@ public class View {
 		print(message);
 		return scanner.nextLine();
 	}
+
+	public int readInt(String message) {
+		try {
+			return Integer.parseInt(read(message));
+		} catch (NumberFormatException e) {
+			print("Por favor ingrese un numero");
+			return readInt(message);
+		}
+	}
 }

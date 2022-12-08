@@ -7,16 +7,21 @@ public class WorldCup {
 	private ArrayList<Gambler> gamblers;
 	private ArrayList<Team> simulationA;
 
-	public WorldCup (ArrayList<Gambler> gamblers) {
-		this.gamblers = gamblers;
+	public WorldCup (ArrayList<Team> teams) {
+		this.teams = teams;
 		this.simulationA = teams;
+		this.gamblers = new ArrayList<Gambler>();
+	}
+
+	public void addGambler(Gambler gambler) {
+		gamblers.add(gambler);
 	}
 
 	public String listMatch() {
 		String str = "";
 
 		for(int i = 0; i < teams.size() - 1; i+=2) {
-			str = teams.get(i).getName() + " vs " + teams.get(i+1).getName();
+			str += teams.get(i).getName() + " vs " + teams.get(i+1).getName() + "\n";
 		}
 
 		return str;
@@ -40,7 +45,7 @@ public class WorldCup {
 	}
 
 	// retorna el equipo perdedor
-	public Team compareMatch(Team team1, Team team2) {
+	private Team compareMatch(Team team1, Team team2) {
 		if(team1.getGoal() > team2.getGoal()) {
 			return team2;
 		} else if(team1.getGoal() < team2.getGoal()) {

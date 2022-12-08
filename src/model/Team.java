@@ -5,9 +5,8 @@ public class Team {
 	private int goal;
 	private int points;
 
-	public Team(String name, int points) {
+	public Team(String name) {
 		this.name = name;
-		this.points = points;
 	}
 
 	public String getName() {
@@ -18,6 +17,9 @@ public class Team {
 	}
 	public int getGoal() {
 		return this.goal;
+	}
+	public void setPoints(int points) {
+		this.points = points;
 	}
 	public void setGoal(int goal) {
 		this.goal = goal;
