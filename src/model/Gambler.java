@@ -1,18 +1,22 @@
 package model;
 
 public class Gambler {
-	private int id;
+	private String name;
 	private int poinsts;
 	private String[][][] prediction;
 
-	public Gambler(int id, int poinsts, String[][][] prediction) {
+	public Gambler(String name, int poinsts, String[][][] prediction) {
 		this.poinsts = poinsts;
-		this.id = id;
+		this.name = name;
 		this.prediction = prediction;
 	}
 
 	public int getPoints() {
 		return this.poinsts;
+	}
+
+	public String getName() {
+		return this.name;
 	}
 
 	public String[][][] getPrediction() {
