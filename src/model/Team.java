@@ -1,27 +1,30 @@
 package model;
 
 public class Team {
-	private String name;
-	private int goal;
-	private int points;
+    private String name;
+    private int goals;
 
-	public Team(String name) {
-		this.name = name;
-	}
+    public Team(String name) {
+        this.name = name;
+    }
 
-	public String getName() {
-		return this.name;
-	}
-	public int getPoints() {
-		return this.points;
-	}
-	public int getGoal() {
-		return this.goal;
-	}
-	public void setPoints(int points) {
-		this.points = points;
-	}
-	public void setGoal(int goal) {
-		this.goal = goal;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getGoals() {
+        return goals;
+    }
+
+    public void setGoals(int goals) {
+        this.goals = goals;
+    }
+
+    public String toString() {
+        return name;
+    }
 }
