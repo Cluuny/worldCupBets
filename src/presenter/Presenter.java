@@ -84,6 +84,7 @@ public class Presenter {
 		// ------Listar partidos------------------------
 		view.print(worldCup.listMatchs(worldCup.getTeams()));
 		// ---------------------------------------------
+		// ------Pedir apuestas-------------------------
 		for (int i = 1; i <= players.size(); i++) {
 			for (Match match : worldCup.getMatches()) {
 				scoreBoard.clear();
@@ -97,10 +98,12 @@ public class Presenter {
 			}
 			betGame.addPlayers(players.get(i - 1));
 		}
-		// Imprime una lista de 16 hash con las apuestas, la idea es que solo imprima
-		// dos objetos player que contienen cada uno 8 apuestas
-		view.print("" + betGame.getPlayers().size());
-		// Listar partidos -> Pedir apuestas -> Jugar partidos
+		// ---------------------------------------------
+		// ------Jugar Partidos-------------------------
+
+		// ---------------------------------------------
+
+		// Listar partidos -> Pedir apuestas -> Jugar partidos -> Revisar apuestas -> Dar puntos
 	}
 
 	public static void main(String[] args) {
