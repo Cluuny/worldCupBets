@@ -87,18 +87,18 @@ public class Presenter {
 		for (int i = 1; i <= players.size(); i++) {
 			for (Match match : worldCup.getMatches()) {
 				scoreBoard.clear();
-				// view.print("" + match.getPresentation());
 				view.print("ingresa tu apuesta para " + match.getPresentation());
 				winnerTeam = view.read("Equipo ganador: ").toLowerCase();
 				scoreBoard.add(view.readInt("Goles anotados por " + match.getTeam1()));
 				scoreBoard.add(view.readInt("Goles anotados por " + match.getTeam2()));
 				Betting bet = new Betting(match.getTeam1(), match.getTeam2(), winnerTeam, scoreBoard);
 				players.get(i - 1).addBets(bet);
-				betGame.addPlayers(players.get(i - 1));
 				view.print(bet.showInformation());
 			}
+			betGame.addPlayers(players.get(i - 1));
 		}
-		//Imprime una lista de 16 hash con las apuestas, la idea es que solo imprima dos objetos player que contienen cada uno 8 apuestas
+		// Imprime una lista de 16 hash con las apuestas, la idea es que solo imprima
+		// dos objetos player que contienen cada uno 8 apuestas
 		view.print("" + betGame.getPlayers().size());
 		// Listar partidos -> Pedir apuestas -> Jugar partidos
 	}
