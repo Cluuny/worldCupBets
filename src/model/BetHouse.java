@@ -35,31 +35,31 @@ public class BetHouse {
         players.add(player);
     }
 
-    private void giftPointsToPlayers(){
+    private void giftPointsToPlayers(ArrayList<Match> matches){
         for (Player player : players) {
             for(int i = 0; i < player.getBets().size(); i++) {
                 Team team1 = player.getBets().get(i).getTeam1();
                 Team team2 = player.getBets().get(i).getTeam2();
-                /*Team team3 = worldCup.getPlayedMatches().get(i).getTeam1();
-                Team team4 = worldCup.getPlayedMatches().get(i).getTeam2();
+                Team team3 = matches.get(i).getTeam1();
+                Team team4 = matches.get(i).getTeam2();
 
                 if (team1.getName().equals(team3.getName()) && team2.getName().equals(team4.getName())) {
-                    if (player.getBets().get(i).getWinner().equals(worldCup.getPlayedMatches().get(i).getWinner())) {
+                    if (player.getBets().get(i).getWinner().equals(matches.get(i).getWinner())) {
                         player.setPoints(player.getPoints() + 4);
                     }
-                    if (player.getBets().get(i).getScoreBoard().equals(worldCup.getPlayedMatches().get(i).getScoreBoard())) {
+                    if (player.getBets().get(i).getScoreBoard().equals(matches.get(i).getScoreBoard())) {
                         player.setPoints(player.getPoints() + 6);
                     }
-                    if (worldCup.getPlayedMatches().get(i).getWinner().equals("Empate")) {
+                    if (matches.get(i).getWinner().equals("Empate")) {
                         player.setPoints(player.getPoints() + 2);
                     }
-                }*/
+                }
             }
         }
     }
 
-    public String tablePlayersInformation() {
-        giftPointsToPlayers();
+    public String tablePlayersInformation(ArrayList<Match> matches) {
+        giftPointsToPlayers(matches);
         String table = "Tabla de posiciones: \n";
         for (Player player : players) {
             table += player.getName() + " " + player.getPoints() + " puntos \n";

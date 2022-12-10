@@ -109,11 +109,14 @@ public class Presenter {
 		// ---------------------------------------------
 		// ------Jugar Partidos-------------------------
 		// ---------------------------------------------
-		view.print(worldCup.playMatches());
+		ArrayList<Object> play = worldCup.playMatches();
+		ArrayList<Match> playedMatches = (ArrayList<Match>) play.get(0);
+		String str = (String) play.get(1);
+		view.print(str);
 		// ---------------------------------------------
 		// ------Revisar apuestas-----------------------
 		// ---------------------------------------------
-		view.print(betGame.tablePlayersInformation());
+		view.print(betGame.tablePlayersInformation(playedMatches));
 
 		// Listar partidos -> Pedir apuestas -> Jugar partidos -> Revisar apuestas y dar puntos
 	}

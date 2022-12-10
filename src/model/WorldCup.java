@@ -7,17 +7,9 @@ public class WorldCup {
     private StringBuilder builder = new StringBuilder();
     private Match match;
     private ArrayList<Match> matches;
-    private ArrayList<Match> playedMatches;
 
     public ArrayList<Match> getMatches() {
         return matches;
-    }
-
-    public ArrayList<Match> getPlayedMatches() {
-        return playedMatches;
-    }
-    public void setPlayedMatches(ArrayList<Match> playedMatches) {
-        this.playedMatches = playedMatches;
     }
 
     public void setMatches(ArrayList<Match> matches) {
@@ -35,7 +27,6 @@ public class WorldCup {
     public WorldCup() {
         this.teams = new ArrayList<Team>();
         this.matches = new ArrayList<Match>();
-        this.playedMatches = new ArrayList<Match>();
         this.initTeams();
     }
 
@@ -106,26 +97,30 @@ public class WorldCup {
         // return teams;
     }
 
-    public String playMatches() {
+    // returna en la primera posicion un arreglo con los equipos jugados y en la segunda un string con texto
+    public ArrayList<Object> playMatches() {
         listMatchs(teams);
         ArrayList<Team> aux = cloneTeams();
-        String str = "";
+        ArrayList<Object> result = new ArrayList<Object>();
+        ArrayList<Match> playedMatches = new ArrayList<Match>();
+        String payload = "";
 
         while(aux.size() > 1){
             listMatchs(aux);
             for(Match match : matches){
                 match.playMatch();
                 playedMatches.add(match);
-                str += "\n" + match.getPresentation();
-                str += match.getWinner() + " gana el partido." + "\n";
-                str += match.getMessage() + "\n";
+                payload += "\n" + match.getPresentation();
+                payload += match.getWinner() + " gana el partido." + "\n";
+                payload += match.getMessage() + "\n";
                 aux.remove(match.getLoser());
-            }    
+            }
         }
 
-        this.setPlayedMatches(playedMatches);
+        result.add(playedMatches);
+        result.add(payload);
 
-        return str;
+        return result;
     }
 
 }
