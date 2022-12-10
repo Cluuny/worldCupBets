@@ -8,6 +8,10 @@ public class Player {
     private int points;
     ArrayList<Betting> bets = new ArrayList<Betting>();
 
+    public Player() {
+        this.points = 0;
+    }
+
     public ArrayList<Betting> getBets() {
         return bets;
     }

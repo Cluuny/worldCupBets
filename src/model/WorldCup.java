@@ -2,16 +2,22 @@ package model;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.html.HTMLBodyElement;
-
 public class WorldCup {
     private ArrayList<Team> teams;
     private StringBuilder builder = new StringBuilder();
     private Match match;
     private ArrayList<Match> matches;
+    private ArrayList<Match> playedMatches;
 
     public ArrayList<Match> getMatches() {
         return matches;
+    }
+
+    public ArrayList<Match> getPlayedMatches() {
+        return playedMatches;
+    }
+    public void setPlayedMatches(ArrayList<Match> playedMatches) {
+        this.playedMatches = playedMatches;
     }
 
     public void setMatches(ArrayList<Match> matches) {
@@ -29,6 +35,7 @@ public class WorldCup {
     public WorldCup() {
         this.teams = new ArrayList<Team>();
         this.matches = new ArrayList<Match>();
+        this.playedMatches = new ArrayList<Match>();
         this.initTeams();
     }
 
@@ -108,6 +115,7 @@ public class WorldCup {
             listMatchs(aux);
             for(Match match : matches){
                 match.playMatch();
+                playedMatches.add(match);
                 str += "\n" + match.getPresentation();
                 str += match.getWinner() + " gana el partido." + "\n";
                 str += match.getMessage() + "\n";
@@ -115,6 +123,9 @@ public class WorldCup {
             }    
         }
 
+        this.setPlayedMatches(playedMatches);
+
         return str;
     }
+
 }

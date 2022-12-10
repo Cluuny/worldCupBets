@@ -105,12 +105,17 @@ public class Presenter {
 
 			betGame.addPlayers(players.get(i - 1));
 		}
+
 		// ---------------------------------------------
 		// ------Jugar Partidos-------------------------
 		// ---------------------------------------------
 		view.print(worldCup.playMatches());
+		// ---------------------------------------------
+		// ------Revisar apuestas-----------------------
+		// ---------------------------------------------
+		view.print(betGame.tablePlayersInformation());
 
-		// Listar partidos -> Pedir apuestas -> Jugar partidos -> Revisar apuestas -> Dar puntos
+		// Listar partidos -> Pedir apuestas -> Jugar partidos -> Revisar apuestas y dar puntos
 	}
 
 	public static void main(String[] args) {
