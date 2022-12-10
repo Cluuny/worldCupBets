@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import org.w3c.dom.html.HTMLBodyElement;
+
 public class WorldCup {
     private ArrayList<Team> teams;
     private StringBuilder builder = new StringBuilder();
@@ -51,8 +53,18 @@ public class WorldCup {
         return teams;
     }
 
+    
+    public ArrayList<Team> cloneTeams() {
+        ArrayList<Team> aux = new ArrayList<Team>();
+        for (Team team : teams) {
+            aux.add(team);
+        }
+        return aux;
+    }
+
     public String listMatchs(ArrayList<Team> teams) {
         String presentation;
+        matches.clear();
         builder.delete(0, builder.length());
         builder.append("Proximos partidos: \n");
         for (int i = 0; i < teams.size(); i += 2) {
@@ -87,53 +99,22 @@ public class WorldCup {
         // return teams;
     }
 
-    // retorna un arrayList con dos posiciones. En la primera va a tener el equipo y en la segunda el mensaje
-	private ArrayList<Object> compareMatch(Team team1, Team team2) {
-		ArrayList<Object> resultMatch = new ArrayList<Object>();
-		if(team1.getGoals() > team2.getGoals()) {
-			resultMatch.add(team2);
-			resultMatch.add("El partido termino: " + team1.getGoals() + " - " + team2.getGoals() + "\n");
-		} else if(team1.getGoals() < team2.getGoals()) {
-			resultMatch.add(team1);
-			resultMatch.add("El partido termino: " + team1.getGoals() + " - " + team2.getGoals() + "\n");
-		} else {
-			// empate gol de plata
-			resultMatch = this.silverGoal(team1, team2);
-		}
-		return resultMatch;
-	}
+    public String playMatches() {
+        listMatchs(teams);
+        ArrayList<Team> aux = cloneTeams();
+        String str = "";
 
-	private ArrayList<Object> silverGoal(Team team1, Team team2) {
-		ArrayList<Object> silverGoals = new ArrayList<Object>();
-		String str = "El partido termino en empate (" + team1.getGoals() + " - " + team2.getGoals() + "), se jugara un gol de plata \n";
-		int random = (int)(Math.random()*3);
-		team1.setGoals(random);
-		random = (int)(Math.random()*3);
-		team2.setGoals(random);
-		if(team1.getGoals() > team2.getGoals()) {
-			silverGoals.add(team2);
-			silverGoals.add("Gol de plata: " + team1.getGoals() + " - " + team2.getGoals() + "\n");
-		} else if(team1.getGoals() < team2.getGoals()) {
-			silverGoals.add(team1);
-			silverGoals.add("Gol de plata: " + team1.getGoals() + " - " + team2.getGoals() + "\n");
-		} else {
-			// empate segundo tiempo de la prorroga
-			str += "El gol de plata termino en empate (" + team1.getGoals() + " - " + team2.getGoals() + "), se jugara un segundo tiempo de la prorroga \n";
-			while(team1.getGoals() == team2.getGoals()) {
-				random = (int)(Math.random()*3);
-				team1.setGoals(random);
-				random = (int)(Math.random()*3);
-				team2.setGoals(random);
-			}
-			if(team1.getGoals() > team2.getGoals()) {
-				silverGoals.add(team2);
-				silverGoals.add("Segundo tiempo de la prorroga: " + team1.getGoals() + " - " + team2.getGoals() + "\n");
-			} else if(team1.getGoals() < team2.getGoals()) {
-				silverGoals.add(team1);
-				silverGoals.add("Segundo tiempo de la prorroga: " + team1.getGoals() + " - " + team2.getGoals() + "\n");
-			}
-		}
-		silverGoals.add(str);
-		return silverGoals;
-	}
+        while(aux.size() > 1){
+            listMatchs(aux);
+            for(Match match : matches){
+                match.playMatch();
+                str += "\n" + match.getPresentation();
+                str += match.getWinner() + " gana el partido." + "\n";
+                str += match.getMessage() + "\n";
+                aux.remove(match.getLoser());
+            }    
+        }
+
+        return str;
+    }
 }
