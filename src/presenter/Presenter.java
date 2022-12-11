@@ -65,6 +65,7 @@ public class Presenter {
 	}
 
 	public ArrayList<Player> createPlayers() {
+		players.clear();
 		int playerNumber = view.readInt("Ingrese el numero de jugadores");
 		for (int i = 1; i <= playerNumber; i++) {
 			Player player = new Player(view.read("Ingresa el nombre del jugador numero " + i + ": "));
@@ -78,7 +79,6 @@ public class Presenter {
 	}
 
 	public void initCup() {
-		String winnerTeam;
 		ArrayList<Integer> scoreBoard = new ArrayList<Integer>();
 		players = this.createPlayers();
 		// ------Listar partidos------------------------
@@ -86,24 +86,39 @@ public class Presenter {
 		// ---------------------------------------------
 		// ------Pedir apuestas-------------------------
 		for (int i = 1; i <= players.size(); i++) {
-			for (Match match : worldCup.getMatches()) {
-				scoreBoard.clear();
-				view.print("ingresa tu apuesta para " + match.getPresentation());
-				winnerTeam = view.read("Equipo ganador: ").toLowerCase();
-				scoreBoard.add(view.readInt("Goles anotados por " + match.getTeam1()));
-				scoreBoard.add(view.readInt("Goles anotados por " + match.getTeam2()));
-				Betting bet = new Betting(match.getTeam1(), match.getTeam2(), winnerTeam, scoreBoard);
-				players.get(i - 1).addBets(bet);
-				view.print(bet.showInformation());
+			ArrayList<Team> teams = worldCup.cloneTeams();
+			view.print(players.get(i - 1).getName() + ", es momento de apostar!!!\n");
+			while(teams.size() > 1) {
+				worldCup.listMatchs(teams);
+				for (Match match : worldCup.getMatches()) {
+					scoreBoard.clear();
+					view.print("Ingresa tu apuesta para " + match.getPresentation());
+					scoreBoard.add(view.readInt("Goles anotados por " + match.getTeam1()));
+					scoreBoard.add(view.readInt("Goles anotados por " + match.getTeam2()));
+					match.setScoreBoard(scoreBoard);
+					Betting bet = new Betting(match.getTeam1(), match.getTeam2(), match.winner(), scoreBoard);
+					players.get(i - 1).addBets(bet);
+					teams.remove(match.getLoser());
+					view.print(bet.showInformation());
+				}
 			}
+
 			betGame.addPlayers(players.get(i - 1));
 		}
+
 		// ---------------------------------------------
 		// ------Jugar Partidos-------------------------
-
 		// ---------------------------------------------
+		ArrayList<Object> play = worldCup.playMatches();
+		ArrayList<Match> playedMatches = (ArrayList<Match>) play.get(0);
+		String str = (String) play.get(1);
+		view.print(str);
+		// ---------------------------------------------
+		// ------Revisar apuestas-----------------------
+		// ---------------------------------------------
+		view.print(betGame.tablePlayersInformation(playedMatches));
 
-		// Listar partidos -> Pedir apuestas -> Jugar partidos -> Revisar apuestas -> Dar puntos
+		// Listar partidos -> Pedir apuestas -> Jugar partidos -> Revisar apuestas y dar puntos
 	}
 
 	public static void main(String[] args) {

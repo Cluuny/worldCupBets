@@ -51,8 +51,18 @@ public class WorldCup {
         return teams;
     }
 
+    
+    public ArrayList<Team> cloneTeams() {
+        ArrayList<Team> aux = new ArrayList<Team>();
+        for (Team team : teams) {
+            aux.add(team);
+        }
+        return aux;
+    }
+
     public String listMatchs(ArrayList<Team> teams) {
         String presentation;
+        matches.clear();
         builder.delete(0, builder.length());
         builder.append("Proximos partidos: \n");
         for (int i = 0; i < teams.size(); i += 2) {
@@ -87,18 +97,30 @@ public class WorldCup {
         // return teams;
     }
 
-    private Team compareMatch(Team team1, Team team2) {
-        if (team1.getGoals() > team2.getGoals()) {
-            return team2;
-        } else if (team1.getGoals() < team2.getGoals()) {
-            return team1;
-        } else {
-            // empate gol de plata
-            int random = (int) (Math.random() * 3);
-            team1.setGoals(random);
-            random = (int) (Math.random() * 3);
-            team2.setGoals(random);
-            return this.compareMatch(team1, team2);
+    // returna en la primera posicion un arreglo con los equipos jugados y en la segunda un string con texto
+    public ArrayList<Object> playMatches() {
+        listMatchs(teams);
+        ArrayList<Team> aux = cloneTeams();
+        ArrayList<Object> result = new ArrayList<Object>();
+        ArrayList<Match> playedMatches = new ArrayList<Match>();
+        String payload = "";
+
+        while(aux.size() > 1){
+            listMatchs(aux);
+            for(Match match : matches){
+                match.playMatch();
+                playedMatches.add(match);
+                payload += "\n" + match.getPresentation();
+                payload += match.getWinner() + " gana el partido." + "\n";
+                payload += match.getMessage() + "\n";
+                aux.remove(match.getLoser());
+            }
         }
+
+        result.add(playedMatches);
+        result.add(payload);
+
+        return result;
     }
+
 }
